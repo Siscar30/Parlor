@@ -2,95 +2,157 @@
 session_start();
 error_reporting(0);
 include('includes/dbconnection.php');
+
+if(isset($_POST['submit'])) {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $message = $_POST['message'];
+
+    $query = "INSERT INTO tblfeedbacks (name, email, message) VALUES ('$name', '$email', '$message')";
+    $result = mysqli_query($con, $query);
+
+    if($result) {
+        echo "<script>alert('Feedback submitted successfully.');</script>";
+    } else {
+        echo "<script>alert('Failed to submit feedback.');</script>";
+    }
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>About Us</title>
-    
-    
-    <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i,900,900i" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="css/animate.css">
-    
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
+<head>
+  <title>About Us</title>
 
-    <link rel="stylesheet" href="css/aos.css">
 
-    <link rel="stylesheet" href="css/ionicons.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i,900,900i" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="css/jquery.timepicker.css">
+  <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+  <link rel="stylesheet" href="css/animate.css">
 
-    
-    <link rel="stylesheet" href="css/flaticon.css">
-    <link rel="stylesheet" href="css/icomoon.css">
-    <link rel="stylesheet" href="css/style.css">
-  </head>
-  <body>
-	  <?php include_once('includes/header.php');?>
-    <section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg-2.jpg');" data-stellar-background-ratio="0.5">
-      <div class="overlay"></div>
-      <div class="container">
-        <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
-          <div class="col-md-9 ftco-animate pb-5">
-            <h2 class="mb-0 bread">About Us</h2>
-            <p class="breadcrumbs"><span class="mr-2"><a href="index.php">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>About <i class="ion-ios-arrow-forward"></i></span></p>
-          </div>
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="css/magnific-popup.css">
+
+  <link rel="stylesheet" href="css/aos.css">
+
+  <link rel="stylesheet" href="css/ionicons.min.css">
+
+  <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+  <link rel="stylesheet" href="css/jquery.timepicker.css">
+
+
+  <link rel="stylesheet" href="css/flaticon.css">
+  <link rel="stylesheet" href="css/icomoon.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <?php include_once('includes/header.php');?>
+  <section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg-2.jpg');"
+    data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
+        <div class="col-md-9 ftco-animate pb-5">
+          <h2 class="mb-0 bread">About Us</h2>
+          <p class="breadcrumbs"><span class="mr-2"><a href="index.php">Home <i
+                  class="ion-ios-arrow-forward"></i></a></span> <span>About <i class="ion-ios-arrow-forward"></i></span>
+          </p>
         </div>
       </div>
-    </section>
-    <br>
-    <section class="ftco-section ftco-no-pb ftco-no-pt">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-6 d-flex">
-						<div class="p-md-5 img img-2 d-flex justify-content-center align-items-center" style="background-image: url(images/salon1.jpg);">
-				
-							
-							</a>
-						</div>
-					</div>
-					<div class="col-md-6 py-md-5 pb-5 wrap-about pb-md-5 ftco-animate">
-						<?php
+    </div>
+  </section>
+  <br>
+  <section class="ftco-section ftco-no-pb ftco-no-pt">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 d-flex">
+          <div class="p-md-5 img img-2 d-flex justify-content-center align-items-center"
+            style="background-image: url(images/salon1.jpg);">
+
+
+            </a>
+          </div>
+        </div>
+        <div class="col-md-6 py-md-5 pb-5 wrap-about pb-md-5 ftco-animate">
+          <?php
 
 $ret=mysqli_query($con,"select * from tblpage where PageType='aboutus' ");
 $cnt=1;
 while ($row=mysqli_fetch_array($ret)) {
 
 ?>
-	          <div class="heading-section mb-4 mt-md-5">
-	          	<h1 class="big">About</h1>
-	          	<span class="subheading"><?php  echo $row['PageTitle'];?></span>
-	           
-	          </div>
-	          <div class="pb-md-5">
-							<p><?php  echo $row['PageDescription'];?>.</p>
-							<center><a href="https://www.facebook.com/annseth17/">Send us a feedback!</a></center>
-              <center><a href="https://www.instagram.com/hansignaturesalonandspa/">Visit Our Instagram!</center>
-						</div>
-            </div>
-            <div class="pb-md-5">
-              
-              
-            </div>
-						<?php } ?>
-					</div>
-				</div>
-			</div>
-		</section>
+          <div class="heading-section mb-4 mt-md-5">
+            <h1 class="big">About</h1>
+            <span class="subheading">
+              <?php  echo $row['PageTitle'];?>
+            </span>
 
-		<br>
-   
-  
+          </div>
+          <div class="pb-md-5">
+            <p>
+              <?php  echo $row['PageDescription'];?>.
+            </p>
+              <div class="row justify-content-center">
+                <div class="col-md-12">
+                <div class="heading-section mb-4 mt-md-5">
+            <h1 class="big">About</h1>
+            <span class="subheading">
+              Send your feedbacks here
+            </span>
+                  <div class="border rounded shadow p-3 mt-3">
+                    <p class="big">Feel free to get in touch with us! Whether you have a question, suggestion, or just want to say
+                      hello, we'd love to hear from you.</p>
+
+                      <form class="p-3" method="post" action="">
+                      <div class="mb-2">
+                        <input class="form-control form-control-sm" id="name" name="name" placeholder="Your Name"
+                          required>
+                      </div>
+                      <div class="mb-2">
+                        <input type="email" class="form-control form-control-sm " id="email" name="email"
+                          placeholder="Your Email Address" required>
+                      </div>
+                      <div class="mb-2">
+                        <textarea class="form-control form-control-sm" id="message" name="message" rows="4"
+                          placeholder="Your Message" required></textarea>
+                      </div>
+
+                      <div class="text-center">
+                          <button type="submit" name="submit" class="btn btn-sm fw-bold bg-primary text-light btn-block mb-1 col-12 mt-5">Send Message</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            <center class="mt-lg-5"><a href="https://www.instagram.com/hansignaturesalonandspa/">Visit Our Instagram!
+            
+          </div>
+        </div>
+        <div class="pb-md-5">
+
+
+        </div>
+        <?php } ?>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <br>
+
+
 
   <!-- loader -->
-  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+      <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+        stroke="#F96D00" />
+    </svg></div>
 
 
 
@@ -108,9 +170,11 @@ while ($row=mysqli_fetch_array($ret)) {
   <script src="js/bootstrap-datepicker.js"></script>
   <script src="js/jquery.timepicker.min.js"></script>
   <script src="js/scrollax.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
-    
-  </body>
+
+</body>
+
 </html>
