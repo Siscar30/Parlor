@@ -1,4 +1,5 @@
-  <div class=" sidebar" role="navigation">
+<div class="sidebar" role="navigation">
+
             <div class="navbar-collapse">
         <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
           <ul class="nav" id="side-menu">
@@ -74,6 +75,9 @@
             </li>
             <li>
               <a href="search-invoices.php" class="chart-nav"><i class="fa fa-search nav_icon"></i>Search Invoice</a>
+            </li>
+            <li>
+              <a href="feedbacks.php" class="chart-nav"><i class="fa  fa-envelope nav_icon"></i>Feedbacks (New)</a>
             </li>
           
 
