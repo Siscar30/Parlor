@@ -77,7 +77,10 @@
               <a href="search-invoices.php" class="chart-nav"><i class="fa fa-search nav_icon"></i>Search Invoice</a>
             </li>
             <li>
-              <a href="feedbacks.php" class="chart-nav"><i class="fa  fa-envelope nav_icon"></i>Feedbacks (New)</a>
+              <a href="feedbacks.php" class="chart-nav"><i class="fa fa-envelope nav_icon"></i>Feedbacks (New)</a>
+            </li>
+            <li>
+              <a href="services-done.php" class="chart-nav"><i class="fa fa-check-circle-o nav_icon"></i>Services Done (New)</a>
             </li>
           
 
