@@ -56,7 +56,6 @@ if(isset($_POST['submit'])) {
     <link rel="stylesheet" href="css/bootstrap-datepicker.css">
     <link rel="stylesheet" href="css/jquery.timepicker.css">
 
-    
     <link rel="stylesheet" href="css/flaticon.css">
     <link rel="stylesheet" href="css/icomoon.css">
     <link rel="stylesheet" href="css/style.css">
@@ -77,8 +76,6 @@ if(isset($_POST['submit'])) {
 		          		<span class="subheading">Beauty Parlour</span>
 			            <h1 class="mb-4">Get Pretty Look</h1>
 			            <p class="mb-4">We pride ourselves on our high quality work and attention to detail. The products we use are of top quality branded products.</p>
-			            
-			           
 		            </div>
 		          </div>
 	        	</div>
@@ -95,8 +92,6 @@ if(isset($_POST['submit'])) {
 		          		<span class="subheading">Natural Beauty</span>
 			            <h1 class="mb-4">Beauty Salon</h1>
 			            <p class="mb-4">This parlour provides huge facilities with advanced technology equipments and best quality service. Here we offer best treatment that you might have never experienced before.</p>
-			            
-			           
 		            </div>
 		          </div>
 	        	</div>
@@ -177,11 +172,6 @@ if(isset($_POST['submit'])) {
 
 		
 		<br>
-
-
-  
-    
-  
 
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
