@@ -2,32 +2,35 @@
 include('includes/dbconnection.php');
 session_start();
 error_reporting(0);
-include('includes/dbconnection.php');
-if(isset($_POST['submit']))
-  {
 
-    $name=$_POST['name'];
-    $email=$_POST['email'];
-    $services=$_POST['services'];
-    $adate=$_POST['adate'];
-    $atime=$_POST['atime'];
-    $phone=$_POST['phone'];
+if(isset($_POST['submit'])) {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $services = $_POST['services'];
+    $adate = $_POST['adate'];
+    $atime = $_POST['atime'];
+    $phone = $_POST['phone'];
     $aptnumber = mt_rand(100000000, 999999999);
   
-    $query=mysqli_query($con,"insert into tblappointment(AptNumber,Name,Email,PhoneNumber,AptDate,AptTime,Services) value('$aptnumber','$name','$email','$phone','$adate','$atime','$services')");
-    if ($query) {
-$ret=mysqli_query($con,"select AptNumber from tblappointment where Email='$email' and  PhoneNumber='$phone'");
-$result=mysqli_fetch_array($ret);
-$_SESSION['aptno']=$result['AptNumber'];
- echo "<script>window.location.href='thank-you.php'</script>";	
-  }
-  else
-    {
-      $msg="Something Went Wrong. Please try again";
-    }
+    $cooldown_time = date('Y-m-d H:i:s', strtotime('-15 minutes'));
+    $query = mysqli_query($con, "SELECT COUNT(*) AS num FROM tblappointment WHERE Email='$email' AND ApplyDate > '$cooldown_time'");
+    $row = mysqli_fetch_assoc($query);
+    $num_appointments = $row['num'];
 
-  
+    if ($num_appointments > 0) {
+        $msg = "You can only make one appointment per 15 minutes. Please try again later.";
+    } else {
+        $insert_query = mysqli_query($con, "INSERT INTO tblappointment (AptNumber, Name, Email, PhoneNumber, AptDate, AptTime, Services) VALUES ('$aptnumber', '$name', '$email', '$phone', '$adate', '$atime', '$services')");
+
+        if ($insert_query) {
+            $_SESSION['aptno'] = $aptnumber;
+            echo "<script>window.location.href='thank-you.php'</script>";	
+        } else {
+            $msg = "Something went wrong. Please try again.";
+        }
+    }
 }
+?>
 
 ?>
 <!DOCTYPE html>
