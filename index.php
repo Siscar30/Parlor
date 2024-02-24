@@ -10,13 +10,13 @@ $apt_query = "SELECT * FROM tblappointment WHERE remark LIKE 'Accepted'";
 $result = mysqli_query($con, $apt_query);
 
 if ($result) {
-		while ($row = mysqli_fetch_assoc($result)) {
-				$apts[] = $row;
-		}
-		
-		mysqli_free_result($result);
+    while ($row = mysqli_fetch_assoc($result)) {
+        $apts[] = $row;
+    }
+    
+    mysqli_free_result($result);
 } else {
-		echo "Error executing the query: " . mysqli_error($con);
+    echo "Error executing the query: " . mysqli_error($con);
 }
 
 if(isset($_POST['submit'])) {
@@ -28,27 +28,34 @@ if(isset($_POST['submit'])) {
     $phone = $_POST['phone'];
     $aptnumber = mt_rand(100000000, 999999999);
 
-		
-  
-    $cooldown_time = date('Y-m-d H:i:s', strtotime('-15 minutes'));
-    $query = mysqli_query($con, "SELECT COUNT(*) AS num FROM tblappointment WHERE Email='$email' AND ApplyDate > '$cooldown_time'");
-    $row = mysqli_fetch_assoc($query);
-    $num_appointments = $row['num'];
+    $check_query = mysqli_query($con, "SELECT COUNT(*) AS num FROM tblappointment WHERE AptDate='$adate' AND AptTime='$atime'");
+    $check_row = mysqli_fetch_assoc($check_query);
+    $num_existing_appointments = $check_row['num'];
 
-    if ($num_appointments > 0) {
-        $msg = "You can only make one appointment per 15 minutes. Please try again later.";
+    if ($num_existing_appointments > 0) {
+        $msg = "The selected date and time are already taken. Please choose a different date or time.";
     } else {
-        $insert_query = mysqli_query($con, "INSERT INTO tblappointment (AptNumber, Name, Email, PhoneNumber, AptDate, AptTime, Services) VALUES ('$aptnumber', '$name', '$email', '$phone', '$adate', '$atime', '$services')");
+        $cooldown_time = date('Y-m-d H:i:s', strtotime('-15 minutes'));
+        $query = mysqli_query($con, "SELECT COUNT(*) AS num FROM tblappointment WHERE Email='$email' AND ApplyDate > '$cooldown_time'");
+        $row = mysqli_fetch_assoc($query);
+        $num_appointments = $row['num'];
 
-        if ($insert_query) {
-            $_SESSION['aptno'] = $aptnumber;
-            echo "<script>window.location.href='thank-you.php'</script>";	
+        if ($num_appointments > 0) {
+            $msg = "You can only make one appointment per 15 minutes. Please try again later.";
         } else {
-            $msg = "Something went wrong. Please try again.";
+            $insert_query = mysqli_query($con, "INSERT INTO tblappointment (AptNumber, Name, Email, PhoneNumber, AptDate, AptTime, Services) VALUES ('$aptnumber', '$name', '$email', '$phone', '$adate', '$atime', '$services')");
+
+            if ($insert_query) {
+                $_SESSION['aptno'] = $aptnumber;
+                echo "<script>window.location.href='thank-you.php'</script>";    
+            } else {
+                $msg = "Something went wrong. Please try again.";
+            }
         }
     }
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -125,6 +132,10 @@ if(isset($_POST['submit'])) {
 	    </div>
     </section>
 
+		<section class="ftco-section ftco-no-pt ftco-booking px-5">
+		<div id="calendar"></div>
+							</section>
+		</section>	
 
 <br>
     <section class="ftco-section ftco-no-pt ftco-booking">
@@ -186,6 +197,7 @@ if(isset($_POST['submit'])) {
 			          </form>
 		          </div>
 						</div>
+
     			</div>
 					<div class="one-third">
 						<div class="img" style="background-image: url(images/bg-1.jpg);">
@@ -198,11 +210,6 @@ if(isset($_POST['submit'])) {
     </section>
 		
 		<br>
-
-		<section class="ftco-section ftco-no-pt ftco-booking">
-		<div id="calendar"></div>
-							</section>
-		</section>	
 
 
   <!-- loader -->
@@ -231,6 +238,8 @@ if(isset($_POST['submit'])) {
   <script src="js/evo-calendar.js"></script>
 
   <script>
+
+		
   $(document).ready(function () {
     $('#calendar').evoCalendar();
 
@@ -242,7 +251,8 @@ if(isset($_POST['submit'])) {
 					name: appt['Name'],
 					description: 'Time: ' + appt['AptTime'] + '<br>Services: ' + appt['Services'],
 					date: appt['AptDate'],
-					type: 'event'
+					type: 'event',
+					
 				});
 			});
 		});
