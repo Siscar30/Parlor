@@ -3,6 +3,22 @@ include('includes/dbconnection.php');
 session_start();
 error_reporting(0);
 
+$apts = array();
+
+$apt_query = "SELECT * FROM tblappointment WHERE remark LIKE 'Accepted'";
+
+$result = mysqli_query($con, $apt_query);
+
+if ($result) {
+		while ($row = mysqli_fetch_assoc($result)) {
+				$apts[] = $row;
+		}
+		
+		mysqli_free_result($result);
+} else {
+		echo "Error executing the query: " . mysqli_error($con);
+}
+
 if(isset($_POST['submit'])) {
     $name = $_POST['name'];
     $email = $_POST['email'];
@@ -11,6 +27,8 @@ if(isset($_POST['submit'])) {
     $atime = $_POST['atime'];
     $phone = $_POST['phone'];
     $aptnumber = mt_rand(100000000, 999999999);
+
+		
   
     $cooldown_time = date('Y-m-d H:i:s', strtotime('-15 minutes'));
     $query = mysqli_query($con, "SELECT COUNT(*) AS num FROM tblappointment WHERE Email='$email' AND ApplyDate > '$cooldown_time'");
@@ -32,10 +50,11 @@ if(isset($_POST['submit'])) {
 }
 ?>
 
-?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
+
     <title>Home Page</title>
         
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
@@ -64,6 +83,9 @@ if(isset($_POST['submit'])) {
   <link rel="stylesheet" type="text/css" href="css/evo-calendar.midnight-blue.css" />
   </head>
   <body>
+	<section class="ftco-section ftco-no-pt ftco-booking">
+		
+		</section>
 	  <?php include_once('includes/header.php');?>
     <!-- END nav -->
 
@@ -171,14 +193,17 @@ if(isset($_POST['submit'])) {
 					</div>
     		</div>
     	</div>
-    </section>
 
+			
+    </section>
 		
 		<br>
 
 		<section class="ftco-section ftco-no-pt ftco-booking">
 		<div id="calendar"></div>
 							</section>
+		</section>	
+
 
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
@@ -206,10 +231,23 @@ if(isset($_POST['submit'])) {
   <script src="js/evo-calendar.js"></script>
 
   <script>
-    $(document).ready(function () {
-      $('#calendar').evoCalendar();
-    });
-  </script>
+  $(document).ready(function () {
+    $('#calendar').evoCalendar();
+
+    const apts = <?php echo json_encode($apts); ?>;
+    
+    apts.forEach(function(appt) {
+      $('#calendar').evoCalendar('addCalendarEvent', {
+					id: appt['AptNumber'],
+					name: appt['Name'],
+					description: 'Time: ' + appt['AptTime'] + '<br>Services: ' + appt['Services'],
+					date: appt['AptDate'],
+					type: 'event'
+				});
+			});
+		});
+	</script>
+
     
   </body>
 </html>
