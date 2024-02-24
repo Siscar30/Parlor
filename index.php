@@ -59,6 +59,9 @@ if(isset($_POST['submit'])) {
     <link rel="stylesheet" href="css/flaticon.css">
     <link rel="stylesheet" href="css/icomoon.css">
     <link rel="stylesheet" href="css/style.css">
+
+		<link rel="stylesheet" type="text/css" href="css/evo-calendar.css" />
+  <link rel="stylesheet" type="text/css" href="css/evo-calendar.midnight-blue.css" />
   </head>
   <body>
 	  <?php include_once('includes/header.php');?>
@@ -173,6 +176,10 @@ if(isset($_POST['submit'])) {
 		
 		<br>
 
+		<section class="ftco-section ftco-no-pt ftco-booking">
+		<div id="calendar"></div>
+							</section>
+
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 
@@ -194,6 +201,15 @@ if(isset($_POST['submit'])) {
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="js/evo-calendar.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      $('#calendar').evoCalendar();
+    });
+  </script>
     
   </body>
 </html>
